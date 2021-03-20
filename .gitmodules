@@ -1,0 +1,3 @@
+[submodule "src/lib/RandomNumberGenerator"]
+	path = src/lib/RandomNumberGenerator
+	url = https://github.com/hamza5485/RandomNumberGenerator.git
