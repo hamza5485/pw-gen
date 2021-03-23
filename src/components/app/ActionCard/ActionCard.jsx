@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -22,6 +22,10 @@ const ActionCard = props => {
     const { body } = props;
     const { onClickAction } = props;
 
+    useEffect(() => {
+        onClickAction();
+    }, []);
+
     return (
         <Card className={classes.cardRoot}>
             {data ? <CardActionArea>
@@ -35,12 +39,9 @@ const ActionCard = props => {
                 </CardContent>
             </CardActionArea> : <CircularProgress disableShrink className={classes.progress} />}
             <CardActions>
-                <Button size="small" color="primary" onClick={onClickAction}>
+                <Button size="small" color="primary" onClick={onClickAction} disabled={!data}>
                     Generate New Password
                 </Button>
-                {/* <Button size="small" color="primary">
-                    Learn More
-                </Button> */}
             </CardActions>
         </Card>
     );
