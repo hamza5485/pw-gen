@@ -4,38 +4,9 @@ import diceware from './diceware.json';
 class PassphraseGenerator {
 
     _wordlist = diceware.wordlist;
-    _symbols = [
-        '=',
-        '+',
-        '-',
-        '^',
-        '$',
-        '*',
-        '.',
-        '[',
-        ']',
-        '{',
-        '}',
-        '(',
-        ')',
-        '?',
-        '"',
-        '!',
-        '@',
-        '#',
-        '%',
-        '&',
-        '/',
-        '\\',
-        '>',
-        '<',
-        `'`,
-        ':',
-        ';',
-        '|',
-        '_',
-        '~',
-        '`']
+    _symbols = ['=', '+', '-', '^', '$', '*', '.', '[', ']', '{',
+        '}', '(', ')', '?', '"', '!', '@', '#', '%', '&', '/',
+        '\\', '>', '<', `'`, ':', ';', '|', '_', '~', '`'];
 
     constructor() {
         this._randomGen = new RandomNumberGenerator()
@@ -43,10 +14,12 @@ class PassphraseGenerator {
 
     async generatePassphrase() {
         const numberArr = await this._randomGen.generateSequence(6, 5, 5);
-        const keyList = this._formKeys(numberArr);
-        let phrase = this._getPhrase(keyList);
-        let passphrase = this._strengthen(phrase);
-        return passphrase;
+        if (numberArr.length > 0) {
+            const keyList = this._formKeys(numberArr);
+            let phrase = this._getPhrase(keyList);
+            let passphrase = this._strengthen(phrase);
+            return passphrase;
+        }
     }
 
     _formKeys(numbers) {
@@ -71,37 +44,38 @@ class PassphraseGenerator {
     }
 
     async _strengthen(phrase) {
-        // get random integers, make those caps;
-        const indexesToCapitalize = await this._randomGen.generate(phrase.length, Math.floor(phrase.length / 2));
-        let capitalized = '';
-        phrase.split('').forEach((char, i) => indexesToCapitalize.includes(i) ? capitalized += char.toUpperCase() : capitalized += char);
-        const symbolDefinition = await this._randomGen.generateSequence(phrase.length < this._symbols.length ? phrase.length : this._symbols.length, 2, 5);
-        const symbols = symbolDefinition[0].map(el => this._symbols[el]);
-        let symbolized = '';
-        symbolDefinition[1].forEach((position, index) => {
-            symbolized = symbolized === '' ?
-                this._insertAt(capitalized, symbols[index], position) :
-                this._insertAt(symbolized, symbols[index], position);
-        });
-        // add numbers
-        const indexesForNumbers = await this._randomGen.generateSequence(phrase.length, 2, 5);
         let strengthened = '';
-        indexesForNumbers[1].forEach((position, index) => {
-            strengthened = strengthened === '' ?
-                this._insertAt(symbolized, symbols[index], position) :
-                this._insertAt(strengthened, symbols[index], position);
-                // symbolized.substring(0, position) + indexesForNumbers[0][index] + symbolized.substring(position) :
-                // strengthened.substring(0, position) + indexesForNumbers[0][index] + strengthened.substring(position);
-        });
+        // random indexes to capitalize 
+        const indexesToCapitalize = await this._randomGen.generate(phrase.length, Math.floor(phrase.length / 2));
+        // random numbers and indexes @ which they'll be added
+        const indexesForNumbers = await this._randomGen.generateSequence(phrase.length, 2, 5);
+        // random indexes to get symbols from _symbols && indexes where symbols will be added
+        const symbolDefinition = await this._randomGen.generateSequence(phrase.length < this._symbols.length ? phrase.length : this._symbols.length, 2, 5);
+        if (indexesToCapitalize.length > 0 && indexesForNumbers.length > 0 && symbolDefinition.length > 0) {
+            // capptialize words
+            let capitalized = '';
+            phrase.split('').forEach((char, i) => indexesToCapitalize.includes(i) ? capitalized += char.toUpperCase() : capitalized += char);
+            // add symbols
+            const symbols = symbolDefinition[0].map(el => this._symbols[el]);
+            let symbolized = '';
+            symbolDefinition[1].forEach((position, index) => {
+                symbolized = symbolized === '' ?
+                    this._insertAt(capitalized, symbols[index], position) :
+                    this._insertAt(symbolized, symbols[index], position);
+            });
+            // add numbers
+            indexesForNumbers[1].forEach((position, index) => {
+                strengthened = strengthened === '' ?
+                    this._insertAt(symbolized, symbols[index], position) :
+                    this._insertAt(strengthened, symbols[index], position);
+            });
+        }
         return strengthened;
     }
 
     _insertAt(string, toInsert, position) {
         return string.substring(0, position) + toInsert + string.substring(position);
     }
-
-
-
 }
 
 export default PassphraseGenerator;
