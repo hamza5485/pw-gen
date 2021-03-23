@@ -48,9 +48,9 @@ class PassphraseGenerator {
         // random indexes to capitalize 
         const indexesToCapitalize = await this._randomGen.generate(phrase.length, Math.floor(phrase.length / 2));
         // random numbers and indexes @ which they'll be added
-        const indexesForNumbers = await this._randomGen.generateSequence(phrase.length, 2, 5, true);
+        const indexesForNumbers = await this._randomGen.generateSequence(phrase.length, 2, 5, false);
         // random indexes to get symbols from _symbols && indexes where symbols will be added
-        const symbolDefinition = await this._randomGen.generateSequence(phrase.length < this._symbols.length ? phrase.length : this._symbols.length, 2, 5, true);
+        const symbolDefinition = await this._randomGen.generateSequence(phrase.length < this._symbols.length ? phrase.length : this._symbols.length, 2, 5, false);
         if (indexesToCapitalize.length > 0 && indexesForNumbers.length > 0 && symbolDefinition.length > 0) {
             // capptialize words
             let capitalized = '';
