@@ -66,8 +66,8 @@ class PassphraseGenerator {
             // add numbers
             indexesForNumbers[1].forEach((position, index) => {
                 strengthened = strengthened === '' ?
-                    this._insertAt(symbolized, symbols[index], position) :
-                    this._insertAt(strengthened, symbols[index], position);
+                    this._insertAt(symbolized, indexesForNumbers[0][index], position) :
+                    this._insertAt(strengthened, indexesForNumbers[0][index], position);
             });
         }
         return strengthened;
