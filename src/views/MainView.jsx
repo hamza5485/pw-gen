@@ -17,7 +17,7 @@ const MainView = () => {
     const [password, setPassword] = React.useState('');
 
     const generatePassword = async () => {
-        console.log(`generating password`);
+        setPassword('');
         const pass = await passGen.generatePassphrase();
         setPassword(pass);
     };
