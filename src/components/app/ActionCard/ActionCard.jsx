@@ -4,13 +4,16 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { cardRoot } from '../../../styles/card';
+import { CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles({
-    cardRoot
+    cardRoot,
+    progress: {
+        margin: '.5em'
+    }
 });
 
 const ActionCard = props => {
@@ -21,7 +24,7 @@ const ActionCard = props => {
 
     return (
         <Card className={classes.cardRoot}>
-            <CardActionArea>
+            {data ? <CardActionArea>
                 <CardContent>
                     <Typography gutterBottom variant="h4" component="h3">
                         {data}
@@ -30,7 +33,7 @@ const ActionCard = props => {
                         {body}
                     </Typography>
                 </CardContent>
-            </CardActionArea>
+            </CardActionArea> : <CircularProgress disableShrink className={classes.progress} />}
             <CardActions>
                 <Button size="small" color="primary" onClick={onClickAction}>
                     Generate New Password
