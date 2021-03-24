@@ -24,7 +24,7 @@ const Snackbar = props => {
 
     return (
         <div className={classes.root}>
-            <MUISnackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <MUISnackbar open={open} autoHideDuration={2000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {message}
                 </Alert>
