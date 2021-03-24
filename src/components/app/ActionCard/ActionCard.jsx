@@ -26,9 +26,25 @@ const ActionCard = props => {
         onClickAction();
     }, []);
 
+    const copyToClipboard = () => {
+        if (data) {
+            const el = document.createElement('textarea');
+            el.value = data;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            
+            // generate notification
+        }
+    };
+
     return (
         <Card className={classes.cardRoot}>
-            {data ? <CardActionArea>
+            {data ? <CardActionArea onClick={copyToClipboard}>
                 <CardContent>
                     <Typography gutterBottom variant="h4" component="h3">
                         {data}
