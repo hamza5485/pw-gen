@@ -25,7 +25,7 @@ const ActionCard = props => {
 
     useEffect(() => {
         onClickAction();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const copyToClipboard = () => {
