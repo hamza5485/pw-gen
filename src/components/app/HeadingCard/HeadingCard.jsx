@@ -12,7 +12,7 @@ const HeadingCard = props => {
     return (
         <Card className={classes.cardRoot}>
             <CardContent>
-                <Typography gutterBottom variant="h3" component="h2">
+                <Typography variant="h3" component="h2">
                     {props.heading}
                 </Typography>
             </CardContent>
