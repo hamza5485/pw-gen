@@ -21,9 +21,11 @@ const ActionCard = props => {
     const { data } = props;
     const { body } = props;
     const { onClickAction } = props;
+    const { generateNotification } = props;
 
     useEffect(() => {
         onClickAction();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const copyToClipboard = () => {
@@ -37,8 +39,7 @@ const ActionCard = props => {
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-            
-            // generate notification
+            generateNotification();
         }
     };
 
