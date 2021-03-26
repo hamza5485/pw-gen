@@ -1,9 +1,9 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import React from 'react';
-import ActionCard from '../components/app/ActionCard';
-import HeadingCard from '../components/app/HeadingCard';
-import Snackbar from '../components/app/Snackbar';
 import PassphraseGenerator from '../lib/PassphraseGenerator';
+const ActionCard = React.lazy(() => import('../components/app/ActionCard'));
+const HeadingCard = React.lazy(() => import('../components/app/HeadingCard'));
+const Snackbar = React.lazy(() => import('../components/app/Snackbar'));
 
 const useStyles = makeStyles(theme => ({
     container: {
