@@ -46,9 +46,7 @@ class PassphraseGenerator {
     }
 
     async _passphraseChecker(passphrase) {
-        console.log(passphrase);
         let obj = zxcvbn(passphrase);
-        console.log(obj);
         return obj;
     };
 
