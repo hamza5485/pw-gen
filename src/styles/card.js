@@ -9,5 +9,8 @@ export const cardRoot = {
     margin: '1em',
     [theme.breakpoints.down('xs')]: {
         minWidth: 280
-    }
+    },
+    [theme.breakpoints.up('sm')]: {
+        minWidth: 600
+    },
 };
