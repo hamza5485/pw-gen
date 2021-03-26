@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { cardRoot } from '../../../styles/card';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Link } from '@material-ui/core';
 
 const useStyles = makeStyles({
     cardRoot,
@@ -15,6 +15,8 @@ const useStyles = makeStyles({
         margin: '.5em'
     }
 });
+
+const URL = "https://github.com/dropbox/zxcvbn#usage";
 
 const ActionCard = props => {
     const classes = useStyles();
@@ -31,7 +33,7 @@ const ActionCard = props => {
     const copyToClipboard = () => {
         if (data) {
             const el = document.createElement('textarea');
-            el.value = data;
+            el.value = data.password;
             el.setAttribute('readonly', '');
             el.style.position = 'absolute';
             el.style.left = '-9999px';
@@ -43,18 +45,38 @@ const ActionCard = props => {
         }
     };
 
+    const getPassphraseInfo = () => {
+        if (data) {
+            const timeToCrack = data.crack_times_display.offline_fast_hashing_1e10_per_second;
+            // const score = data.score;
+            const backgroundColor = data.score === 4 ? "green" : data.score === 1 ? "red" : "orange";
+            const textColor = data.score === 4 ? "white" : data.score === 1 ? "white" : "black";
+            return (
+                <CardContent style={{ color: textColor, backgroundColor: backgroundColor }}>
+                    <Typography variant="overline" display="block" gutterBottom>
+                        {`Time to crack: `}
+                        <Link target="_blank" rel="noreferrer" href={URL} style={{ textDecoration: 'underline', color: textColor }}>
+                            {timeToCrack}
+                        </Link>
+                    </Typography>
+                </CardContent>
+            );
+        }
+    };
+
     return (
         <Card className={classes.cardRoot}>
             {data ? <CardActionArea onClick={copyToClipboard}>
                 <CardContent>
                     <Typography gutterBottom variant="h4" component="h3">
-                        {data}
+                        {data.password}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
                         {body}
                     </Typography>
                 </CardContent>
             </CardActionArea> : <CircularProgress disableShrink className={classes.progress} />}
+            {getPassphraseInfo()}
             <CardActions>
                 <Button size="small" color="primary" onClick={onClickAction} disabled={!data}>
                     Generate New Password
