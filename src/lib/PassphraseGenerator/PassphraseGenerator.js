@@ -1,5 +1,6 @@
 import RandomNumberGenerator from '../RandomNumberGenerator';
 import diceware from './diceware.json';
+import zxcvbn from 'zxcvbn';
 
 class PassphraseGenerator {
 
@@ -17,8 +18,9 @@ class PassphraseGenerator {
         if (numberArr.length > 0) {
             const keyList = this._formKeys(numberArr);
             let phrase = this._getPhrase(keyList);
-            let passphrase = this._strengthen(phrase);
-            return passphrase;
+            let passphrase = await this._strengthen(phrase);
+            let passphraseObject = await this._passphraseChecker(passphrase);
+            return passphraseObject;
         }
     }
 
@@ -42,6 +44,13 @@ class PassphraseGenerator {
         });
         return phrase;
     }
+
+    async _passphraseChecker(passphrase) {
+        console.log(passphrase);
+        let obj = zxcvbn(passphrase);
+        console.log(obj);
+        return obj;
+    };
 
     async _strengthen(phrase) {
         let strengthened = '';
