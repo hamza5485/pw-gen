@@ -1,14 +1,20 @@
 import React from 'react';
 import './App.css';
-import MainView from './views/MainView';
+const MainView = React.lazy(() => import('./views/MainView'));
 
 
 const App = () => {
 
     return (
-        <div className="App">
-            <MainView />
-        </div>
+        <React.Suspense fallback={
+            <div>
+                Loading...
+            </div>
+        }>
+            <div className="App">
+                <MainView />
+            </div>
+        </React.Suspense >
     );
 };
 

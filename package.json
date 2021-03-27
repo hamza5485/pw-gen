@@ -1,6 +1,7 @@
 {
   "name": "pw-gen",
   "version": "0.1.0",
+  "homepage": "https://hamzaanas.codes/pw-gen",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
