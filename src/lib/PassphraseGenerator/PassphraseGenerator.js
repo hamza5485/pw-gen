@@ -10,11 +10,11 @@ class PassphraseGenerator {
         '\\', '>', '<', `'`, ':', ';', '|', '_', '~', '`'];
 
     constructor() {
-        this._randomGen = new RandomNumberGenerator()
+        this._randomGen = new RandomNumberGenerator();
     }
 
     async generatePassphrase() {
-        const numberArr = await this._randomGen.generateSequence(6, 5, 5, false);
+        const numberArr = await this._randomGen.generateSequence(6, 5, 5, true);
         if (numberArr.length > 0) {
             const keyList = this._formKeys(numberArr);
             let phrase = this._getPhrase(keyList);

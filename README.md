@@ -3,3 +3,4 @@ Generates strong passwords based on the [Diceware word list](https://theworld.co
 
 [Live Demo](https://hamzaanas.codes/pw-gen)
 
+For more information, please read my [blog post](). 
